@@ -1,23 +1,23 @@
-import GasStation from "./model";
+import auction from "./model";
 import mongoose from "mongoose";
 
 
-const gasStationKeepingControler = {
+const auctionControler = {
     get: async (req, res) => {
         try {
             
-            const result = await GasStation.find({}).lean()
-            let A80 = 0;
-            let A92 = 0;
-            let A95 = 0;
+            const result = await auction.find({}).lean()
+            let name = " ";
+            let starting_price = 0;
+            let end_price = 0;
             result.forEach(element => {
                 if (element.firm_owner == req.query.f) {
-                    A80 += element.rest_A80 * 1;
-                    A92 += element.rest_A92 * 1;
-                    A95 += element.rest_A95 * 1;
+                    name += element.name * 1;
+                    starting_price+= element.starting_price * 1;
+                    end_price += element.end_price * 1;
                 }
             });
-            var ress = "A80 - " + A80.toString() + ", A92 - " + A92.toString() + ", A95 - " + A95.toString();
+            var ress = " Name - " + name.toString() + ", почоткова ціна - " +  starting_price.toString() + ", кінцева ціна - " + end_price.toString();
             if (req.query.f) {
                 res.send(ress)
             }
@@ -30,9 +30,9 @@ const gasStationKeepingControler = {
     },
     getById: async (req, res) =>{
         try {
-            const gasStation = await GasStation.findById(req.params.id);
-            if (gasStation) 
-                res.send(gasStation);
+            const auctionStation = await auction.findById(req.params.id);
+            if (auction) 
+                res.send(auction);
             else
                 res.status(404).send("Not Found");             
         }
@@ -43,9 +43,9 @@ const gasStationKeepingControler = {
     },
     delete: async (req, res) =>{
         try {
-            const gasStation = await GasStation.findByIdAndDelete(req.params.id);
-            if (gasStation) 
-                res.send(gasStation);
+            const auction = await auction.findByIdAndDelete(req.params.id);
+            if (auction) 
+                res.send(auction);
             else
                 res.status(404).send("Not Found");             
         }
@@ -56,17 +56,17 @@ const gasStationKeepingControler = {
     },
     post: async (req, res) =>{
         try {
-            let newGasStation;
-            let gasStation;
+            let newauction;
+            let gasauction;
             if (Array.isArray(req.body)) {
                 req.body.forEach(async element=>{
-                    newGasStation = new GasStation(element);
-                    gasStation = await newGasStation.save();
+                    newauction = new auction(element);
+                    gasauction = await newauction.save();
                 })
             }
             else {
-                newGasStation = new GasStation(req.body);
-                gasStation = await newGasStation.save(); 
+                newauction = new auction(req.body);
+                gasauction = await newauction.save(); 
             }
           
             res.send("Fine :)");             
@@ -78,11 +78,11 @@ const gasStationKeepingControler = {
     },
     patch: async (req, res) =>{
         try {
-            const gasStation = await GasStation.findOneAndUpdate(req.params.id, req.body, {
+            const auction = await auction.findOneAndUpdate(req.params.id, req.body, {
                 returnOriginal: false
             } );
-            if (gasStation) 
-                res.send(gasStation);
+            if (auctionn) 
+                res.send(auction);
             else
                 res.status(404).send("Not Found");             
         }
@@ -93,4 +93,4 @@ const gasStationKeepingControler = {
     }
 }
 
-export default gasStationKeepingControler;
+export default auctionControler;

@@ -1,13 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
-import apiRouter from "./api/gasStation";
-import controller from "./api/gasStation/controler";
+import apiRouter from "./api/auction";
+import controller from "./api/auction/controler";
 
 const server = new express();
 
 server.use(express.urlencoded({extended: true}));
 server.use(express.json());
-server.use("/api/gasStation", apiRouter);
+server.use("/api/auction", apiRouter);
 
 
 mongoose.connect("mongodb://localhost:27017/usersdb", { useNewUrlParser: true,  useUnifiedTopology: true }).then(() => {

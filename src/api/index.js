@@ -1,8 +1,8 @@
 import {Router} from "express";
-import gasStationKeepingRouter from "./gasStation";
+import auctionRouter from "./auction";
 
 const apiRouter = new Router();
 
-apiRouter.use("/gasStation", gasStationKeepingRouter);
+apiRouter.use("/auction", auctionRouter);
 
 export default apiRouter;
